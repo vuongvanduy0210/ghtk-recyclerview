@@ -1,4 +1,4 @@
-package com.duyvv.recyclerview.ui
+package com.duyvv.recyclerview.ui.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater

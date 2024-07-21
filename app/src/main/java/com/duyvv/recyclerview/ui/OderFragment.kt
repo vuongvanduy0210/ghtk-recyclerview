@@ -7,7 +7,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.duyvv.firstlesson.base.BaseFragment
 import com.duyvv.recyclerview.databinding.FragmentOderBinding
+import com.duyvv.recyclerview.domain.Oder
 import com.duyvv.recyclerview.domain.OderFilter
+import com.duyvv.recyclerview.ui.adapter.FilterAdapter
+import com.duyvv.recyclerview.ui.adapter.OderAdapter
+import com.duyvv.recyclerview.ui.adapter.OderType
 
 class OderFragment : BaseFragment<FragmentOderBinding>() {
 
@@ -28,6 +32,37 @@ class OderFragment : BaseFragment<FragmentOderBinding>() {
 
     private fun setup() {
         setupListFilter()
+
+        setupListOder()
+    }
+
+    private fun setupListOder() {
+        val oderAdapter = OderAdapter()
+        binding.rcvOder.apply {
+            adapter = oderAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+        }
+        oderAdapter.addItems(
+            listOf(
+                Oder(OderType.EXPAND),
+                Oder(OderType.EXPAND),
+                Oder(OderType.EXPAND),
+                Oder(OderType.EXPAND),
+                Oder(OderType.EXPAND),
+                Oder(OderType.EXPAND),
+                Oder(OderType.EXPAND),
+                Oder(OderType.EXPAND),
+                Oder(OderType.COLLAPSE),
+                Oder(OderType.COLLAPSE),
+                Oder(OderType.COLLAPSE),
+                Oder(OderType.COLLAPSE),
+                Oder(OderType.COLLAPSE),
+                Oder(OderType.COLLAPSE),
+                Oder(OderType.COLLAPSE),
+                Oder(OderType.COLLAPSE),
+                Oder(OderType.COLLAPSE),
+            )
+        )
     }
 
     private fun setupListFilter() {
