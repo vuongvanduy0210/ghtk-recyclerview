@@ -6,35 +6,49 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.viewbinding.ViewBinding
 import com.duyvv.recyclerview.base.BaseViewHolder
-import com.duyvv.recyclerview.databinding.ItemCollapseOderBinding
-import com.duyvv.recyclerview.databinding.ItemExpandOderBinding
-import com.duyvv.recyclerview.domain.Oder
+import com.duyvv.recyclerview.databinding.ItemCollapseOrderBinding
+import com.duyvv.recyclerview.databinding.ItemExpandOrderBinding
+import com.duyvv.recyclerview.domain.Order
+import com.duyvv.recyclerview.utils.toMoneyType
 
 @SuppressLint("NotifyDataSetChanged")
-class OderAdapter : Adapter<BaseViewHolder<out ViewBinding>>() {
+class OrderAdapter : Adapter<BaseViewHolder<out ViewBinding>>() {
 
-    inner class CollapseOderVH(binding: ItemCollapseOderBinding) :
-        BaseViewHolder<ItemCollapseOderBinding>(binding) {
+    inner class CollapseOrderVH(binding: ItemCollapseOrderBinding) :
+        BaseViewHolder<ItemCollapseOrderBinding>(binding) {
+
         override fun bind(item: Any) {
-
+            val order = item as Order
+            binding.apply {
+                tvName.text = order.customer.name
+                tvPhoneNumber.text = order.customer.phoneNumber
+            }
         }
     }
 
-    inner class ExpandOderVH(binding: ItemExpandOderBinding) :
-        BaseViewHolder<ItemExpandOderBinding>(binding) {
+    inner class ExpandOrderVH(binding: ItemExpandOrderBinding) :
+        BaseViewHolder<ItemExpandOrderBinding>(binding) {
+
         override fun bind(item: Any) {
+            val order = item as Order
+            binding.apply {
+                tvMoney.text =
+                    "Tiền CoD: ${order.codMoney.toMoneyType()} đ / SP: ${order.productName}"
+                tvStatus.text = "Trạng thái: ${order.status}"
+                tvAddress.text = "Địa chỉ: ${order.address}"
+            }
         }
     }
 
-    private val items = mutableListOf<Oder>()
+    private val items = mutableListOf<Order>()
 
-    fun setItems(items: List<Oder>) {
+    fun setItems(items: List<Order>) {
         this.items.clear()
         this.items.addAll(items)
         notifyDataSetChanged()
     }
 
-    fun addItems(items: List<Oder>) {
+    fun addItems(items: List<Order>) {
         this.items.addAll(items)
         notifyDataSetChanged()
     }
@@ -44,16 +58,16 @@ class OderAdapter : Adapter<BaseViewHolder<out ViewBinding>>() {
         viewType: Int
     ): BaseViewHolder<out ViewBinding> {
         return when (viewType) {
-            TYPE_COLLAPSE -> CollapseOderVH(
-                ItemCollapseOderBinding.inflate(
+            TYPE_COLLAPSE -> CollapseOrderVH(
+                ItemCollapseOrderBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
                 )
             )
 
-            TYPE_EXPAND -> ExpandOderVH(
-                ItemExpandOderBinding.inflate(
+            TYPE_EXPAND -> ExpandOrderVH(
+                ItemExpandOrderBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
@@ -72,8 +86,8 @@ class OderAdapter : Adapter<BaseViewHolder<out ViewBinding>>() {
 
     override fun getItemViewType(position: Int): Int {
         return when (items[position].type) {
-            OderType.COLLAPSE -> TYPE_COLLAPSE
-            OderType.EXPAND -> TYPE_EXPAND
+            OrderType.COLLAPSE -> TYPE_COLLAPSE
+            OrderType.EXPAND -> TYPE_EXPAND
         }
     }
 
@@ -84,6 +98,6 @@ class OderAdapter : Adapter<BaseViewHolder<out ViewBinding>>() {
 }
 
 
-enum class OderType {
+enum class OrderType {
     COLLAPSE, EXPAND
 }

@@ -11,7 +11,7 @@
         android:id="@+id/example_fragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:name="com.duyvv.recyclerview.ui.OderFragment"
+        android:name="com.duyvv.recyclerview.ui.OrderFragment"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

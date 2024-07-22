@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.OderFragment">
+    tools:context=".ui.OrderFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -193,7 +193,7 @@
         app:layout_constraintTop_toBottomOf="@+id/view2">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcvOderFilter"
+            android:id="@+id/rcvOrderFilter"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="7dp"
@@ -214,14 +214,21 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcvOder"
-        android:layout_width="match_parent"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/listOderSwipeLayout"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layoutRcvFilter" />
+        app:layout_constraintTop_toBottomOf="@+id/layoutRcvFilter">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcvOrder"
+            android:layout_width="match_parent"
+            android:layout_height="0dp" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

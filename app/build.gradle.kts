@@ -46,9 +46,14 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     testImplementation(libs.junit)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
     // circle image view
     implementation(libs.circle.image.view)
+
+    // swipe refresh layout
+    implementation(libs.androidx.swiperefreshlayout)
 }

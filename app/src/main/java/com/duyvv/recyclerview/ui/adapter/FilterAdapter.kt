@@ -4,18 +4,23 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.duyvv.recyclerview.base.BaseViewHolder
 import com.duyvv.recyclerview.databinding.ItemFilterBinding
-import com.duyvv.recyclerview.domain.OderFilter
+import com.duyvv.recyclerview.domain.OrderFilter
 
 class FilterAdapter : RecyclerView.Adapter<FilterAdapter.FilterVH>() {
 
-    inner class FilterVH(val binding: ItemFilterBinding) : ViewHolder(binding.root)
+    inner class FilterVH(binding: ItemFilterBinding) : BaseViewHolder<ItemFilterBinding>(binding) {
+        override fun bind(item: Any) {
+            val filter = item as OrderFilter
+            binding.tvTitle.text = filter.title
+        }
+    }
 
-    private val items = mutableListOf<OderFilter>()
+    private val items = mutableListOf<OrderFilter>()
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setItems(items: List<OderFilter>) {
+    fun setItems(items: List<OrderFilter>) {
         this.items.clear()
         this.items.addAll(items)
         notifyDataSetChanged()
@@ -32,8 +37,7 @@ class FilterAdapter : RecyclerView.Adapter<FilterAdapter.FilterVH>() {
     }
 
     override fun onBindViewHolder(holder: FilterVH, position: Int) {
-        val item = items[position]
-        holder.binding.tvTitle.text = item.title
+        holder.bind(items[position])
     }
 
     override fun getItemCount() = items.size

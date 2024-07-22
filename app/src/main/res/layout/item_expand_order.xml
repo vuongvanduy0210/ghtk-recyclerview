@@ -28,18 +28,21 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/tvMoney"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Tiền CoD: 10,000 đ / SP: Sunny"
         android:textSize="18sp" />
 
     <TextView
+        android:id="@+id/tvAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Địa chỉ: Huyện Cần Giờ, TP Hồ Chí Minh"
         android:textSize="18sp" />
 
     <TextView
+        android:id="@+id/tvStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Trạng thái: Đẩy sang GHTK thành công"

@@ -1,5 +1,5 @@
 package com.duyvv.recyclerview.domain
 
-data class OderFilter(
+data class OrderFilter(
     val title: String
 )

@@ -1,4 +1,4 @@
-package com.duyvv.firstlesson.base
+package com.duyvv.recyclerview.base
 
 import android.os.Bundle
 import android.view.LayoutInflater
