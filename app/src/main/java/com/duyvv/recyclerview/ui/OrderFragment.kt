@@ -1,7 +1,6 @@
 package com.duyvv.recyclerview.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +15,7 @@ import com.duyvv.recyclerview.domain.OrderFilter
 import com.duyvv.recyclerview.ui.adapter.FilterAdapter
 import com.duyvv.recyclerview.ui.adapter.OrderAdapter
 import kotlinx.coroutines.launch
+import kotlin.random.Random
 
 class OrderFragment : BaseFragment<FragmentOrderBinding>() {
 
@@ -29,14 +29,14 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>() {
     private var isLoadMore = false
     private val pageSize = 20
     private var pageNum = 1
-    private val totalPage = 5
+    private val totalItem = Random.nextInt(100, 151)
+    private val totalPage = countTotalPage()
 
     private val orderAdapter: OrderAdapter by lazy {
         OrderAdapter()
     }
 
     override fun init() {
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -60,13 +60,12 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>() {
             pageNum = 1
             isLoadMore = false
             orderViewModel.resetOrders()
-            orderViewModel.loadMoreOrders()
+            orderViewModel.loadMoreOrders(pageSize)
         }
     }
 
     private fun setupObserver() {
         lifecycleScope.launch {
-            Log.d("OrderFragment", "CurrentThread: ${Thread.currentThread().name}")
             orderViewModel.orders.collect {
                 orderAdapter.setItems(it)
                 if (it.isNotEmpty())
@@ -82,25 +81,37 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>() {
 
                 val manager = recyclerView.layoutManager as LinearLayoutManager
                 val lastVisibleItemPosition = manager.findLastVisibleItemPosition()
-                Log.d("TAG", "onScrolled: $lastVisibleItemPosition")
                 if (lastVisibleItemPosition == (pageNum - 1) * pageSize + 15 &&
                     pageNum < totalPage &&
                     !isLoadMore
                 ) {
                     isLoadMore = true
-                    orderViewModel.loadMoreOrders()
+                    orderViewModel.loadMoreOrders(
+                        // last page is contain less than pageSize
+                        if (pageNum == totalPage - 1 && totalItem % pageSize > 0) {
+                            totalItem % pageSize
+                        } else {
+                            pageSize
+                        }
+                    )
                     isLoadMore = false
                     pageNum++
-                    Log.d("TAG", "PageNum: $pageNum")
-                    Log.d("TAG", "List order size: ${orderViewModel.orders.value.size}")
                 }
             }
         }
         binding.rcvOrder.apply {
             adapter = orderAdapter
             layoutManager = LinearLayoutManager(requireContext())
-            orderViewModel.loadMoreOrders()
+            orderViewModel.loadMoreOrders(pageSize)
             addOnScrollListener(onScrollListener)
+        }
+    }
+
+    private fun countTotalPage(): Int {
+        return if (totalItem % pageSize > 0) {
+            totalItem / pageSize + 1
+        } else {
+            totalItem / pageSize
         }
     }
 
